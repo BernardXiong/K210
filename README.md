@@ -1,6 +1,4 @@
-# skeleton板级支持包
-
-标签： 文档模版
+# Kendryte K210板级支持包说明
 
 ---
 
@@ -12,17 +10,30 @@ skeleton芯片 是 cc 公司的一款面向 nn 等领域的芯片。包括如下
 
 | 硬件 | 描述 |
 | -- | -- |
-|芯片型号| XXX或XX系列 |
-|CPU| ARM Cortex-M4 |
-|主频| 180MHz |
-|片内SRAM| 128kB |
-|片内Flash| 1MB |
+|芯片型号| K210 |
+|CPU| 双核RV64GC |
+|主频| 400MHz |
+|片内SRAM| 8MB |
 
 ## 2. 编译说明
 
 [说明测试的编译器版本，或env版本情况]
+    
+编译K210，需要先下载K210 BSP以及RT-Thread代码：
 
-推荐使用[env工具][1]，可以在console下进入到`bsp/skeleton`目录中，运行以下命令：
+    git clone https://github.com/BernardXiong/K210.git
+    cd K210
+    git submodule init
+    git submodule update
+
+    git clone https://github.com/RT-Thread/rt-thread.git
+    cd rt-thread
+    git checkout -b dev-4.0.x origin/dev-4.0.x
+
+注意，因为RT-Thread整体代码太庞大，所以并未把RT-Thread git repo以一个submodule方式加入到K210 BSP git repo中，
+而是需要把RT-Thread代码克隆到K210目录下。
+
+编译推荐使用[env工具][1]，可以在console下进入到`K210`目录中，运行以下命令：
 
     scons
 
