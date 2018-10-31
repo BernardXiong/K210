@@ -16,13 +16,12 @@
 
 #include "encoding.h"
 #include "fpioa.h"
-#include "sysclock.h"
 #include "dmac.h"
 
 #include "uarths.h"
 void rt_hw_console_output(const char *str)
 {
-    uart_puts(str);
+    uarths_puts(str);
     return ;
 }
 
@@ -60,8 +59,8 @@ int freq(void)
     rt_uint64_t value = clint_timer_get_freq();
     rt_kprintf("TIMER: %d\n", value);
 
-    value = sysctl_get_freq();
-    rt_kprintf("SYS : %d\n", value);
+    // value = sysctl_get_freq();
+    // rt_kprintf("SYS : %d\n", value);
 
     value = sysctl_clock_get_freq(SYSCTL_CLOCK_PLL0);
     rt_kprintf("PLL0: %d\n", value);
@@ -82,8 +81,6 @@ int freq(void)
 
     value = clint_get_time();
     rt_kprintf("mtime: %d\n", value);
-    value = clint_get_cmp();
-    rt_kprintf("mcmp : %d\n", value);
 
     return 0;
 }
@@ -101,8 +98,6 @@ void rt_hw_board_init(void)
 {
     /* Init FPIOA */
     fpioa_init();
-    /* PLL init */
-    sys_clock_init();
     /* Dmac init */
     dmac_init();
 

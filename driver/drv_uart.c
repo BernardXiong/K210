@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 
-#include "uart.h"
+// #include "uart.h"
 #include "uarths.h"
 #include "plic.h"
 
@@ -67,7 +67,7 @@ int rt_hw_uart_init(void)
         uart->irqno     = IRQN_UARTHS_INTERRUPT;
 
         /* initialize UART HS */
-        uart_init();
+        uarths_init();
 
         rt_hw_serial_register(serial,
                               "uarths",
@@ -167,7 +167,7 @@ static int drv_uart_putc(struct rt_serial_device *serial, char c)
     uart = serial->parent.user_data;
     if (uart->hw_base == UARTHS_BASE_ADDR)
     {
-        uart_putchar(c);
+        uarths_putchar(c);
     }
     else
     {
@@ -184,7 +184,7 @@ static int drv_uart_getc(struct rt_serial_device *serial)
 
     if (uart->hw_base == UARTHS_BASE_ADDR)
     {
-        ret = uart_getc();
+        ret = uarths_getc();
         if (ret != EOF) return ret;
     }
 
