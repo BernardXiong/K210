@@ -29,7 +29,6 @@ kendryte-standalone-sdk/lib/drivers/uart.c
 kendryte-standalone-sdk/lib/drivers/uarths.c
 kendryte-standalone-sdk/lib/drivers/utils.c
 kendryte-standalone-sdk/lib/drivers/wdt.c
-kendryte-standalone-sdk/lib/math/fastexp.c
 ''')
 CPPPATH = [cwd + '/kendryte-standalone-sdk/lib/drivers/include', 
 cwd + '/kendryte-standalone-sdk/lib/bsp/include',

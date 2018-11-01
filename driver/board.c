@@ -56,8 +56,7 @@ void cpu_entry(int cpuid)
 
 int freq(void)
 {
-    rt_uint64_t value = clint_timer_get_freq();
-    rt_kprintf("TIMER: %d\n", value);
+    rt_uint64_t value = 0;
 
     // value = sysctl_get_freq();
     // rt_kprintf("SYS : %d\n", value);

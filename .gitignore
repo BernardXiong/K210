@@ -50,3 +50,11 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+.vscode
+
+*.pyc
+*.bin
+*.elf
+*.map
+cconfig.h
+*.dblite

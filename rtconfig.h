@@ -7,7 +7,7 @@
 /* RT-Thread Kernel */
 
 #define RT_NAME_MAX 8
-#define RT_ALIGN_SIZE 8
+#define RT_ALIGN_SIZE 4
 #define RT_THREAD_PRIORITY_32
 #define RT_THREAD_PRIORITY_MAX 32
 #define RT_TICK_PER_SECOND 100
@@ -34,7 +34,6 @@
 /* Kernel Device Object */
 
 #define RT_USING_DEVICE
-#define RT_USING_INTERRUPT_INFO
 #define RT_USING_CONSOLE
 #define RT_CONSOLEBUF_SIZE 128
 #define RT_CONSOLE_DEVICE_NAME "uarths"
@@ -46,7 +45,7 @@
 
 #define RT_USING_COMPONENTS_INIT
 #define RT_USING_USER_MAIN
-#define RT_MAIN_THREAD_STACK_SIZE 2048
+#define RT_MAIN_THREAD_STACK_SIZE 4096
 #define RT_MAIN_THREAD_PRIORITY 10
 
 /* C++ features */
@@ -76,6 +75,7 @@
 #define RT_USING_DEVICE_IPC
 #define RT_PIPE_BUFSZ 512
 #define RT_USING_SERIAL
+#define RT_USING_PIN
 
 /* Using WiFi */
 
@@ -150,6 +150,12 @@
 
 
 /* example package: hello */
+
+
+/* Privated Packages of RealThread */
+
+
+/* Network Utilities */
 
 #define BOARD_K210_EVB
 #define BSP_USING_UART_HS

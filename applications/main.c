@@ -9,6 +9,7 @@
  */
 
 #include <rtthread.h>
+#include <stdio.h>
 
 int main(void)
 {
@@ -16,3 +17,13 @@ int main(void)
 
     return 0;
 }
+
+int libctest(void)
+{
+    printf("hello!!\n");
+    printf("int => %d\n", 10);
+    printf("float => %f\n", 1.1234);
+
+    return 0;
+}
+MSH_CMD_EXPORT(libctest, libc test);
