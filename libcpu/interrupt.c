@@ -11,6 +11,7 @@
 #include <rthw.h>
 #include <plic.h>
 #include <clint.h>
+#include <interrupt.h>
 
 extern volatile rt_uint8_t rt_interrupt_nest;
 
@@ -151,7 +152,7 @@ uintptr_t handle_irq_m_ext(uintptr_t cause, uintptr_t epc)
         /* Disable software interrupt and timer interrupt */
         clear_csr(mie, MIP_MTIP | MIP_MSIP);
         /* Enable global interrupt */
-        set_csr(mstatus, MSTATUS_MIE);
+        // set_csr(mstatus, MSTATUS_MIE);
 
         if (irq_desc[core_id][int_num].handler)
         {
@@ -161,7 +162,7 @@ uintptr_t handle_irq_m_ext(uintptr_t cause, uintptr_t epc)
         /* Perform IRQ complete */
         plic->targets.target[core_id].claim_complete = int_num;
         /* Disable global interrupt */
-        clear_csr(mstatus, MSTATUS_MIE);
+        // clear_csr(mstatus, MSTATUS_MIE);
         /* Set MPIE and MPP flag used to MRET instructions restore MIE flag */
         set_csr(mstatus, MSTATUS_MPIE | MSTATUS_MPP);
         /* Restore primitive interrupt enable flag */
@@ -173,18 +174,23 @@ uintptr_t handle_irq_m_ext(uintptr_t cause, uintptr_t epc)
     return epc;
 }
 
-extern uintptr_t handle_irq_m_timer(uintptr_t cause, uintptr_t epc);
+extern int tick_isr(void);
 uintptr_t handle_trap(uintptr_t mcause, uintptr_t epc)
 {
+    int cause = mcause & CAUSE_MACHINE_IRQ_REASON_MASK;
+
     if (mcause & (1UL << 63))
     {
-        if (mcause & IRQ_M_EXT)
-            handle_irq_m_ext(mcause, epc);
-
-        if (mcause & IRQ_M_TIMER)
+        switch (cause)
         {
-            // rt_kprintf(".");
-            handle_irq_m_timer(mcause, epc);
+            case IRQ_M_SOFT:
+                break;
+            case IRQ_M_EXT:
+                handle_irq_m_ext(mcause, epc);
+                break;
+            case IRQ_M_TIMER:
+                tick_isr();
+                break;
         }
     }
 

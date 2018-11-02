@@ -3,9 +3,7 @@ from building import *
 cwd     = GetCurrentDir()
 src     = Split('''
 kendryte-standalone-sdk/lib/bsp/sleep.c
-kendryte-standalone-sdk/lib/bsp/syscalls.c
 kendryte-standalone-sdk/lib/bsp/entry.c
-kendryte-standalone-sdk/lib/bsp/interrupt.c
 kendryte-standalone-sdk/lib/bsp/entry_user.c
 kendryte-standalone-sdk/lib/drivers/aes.c
 kendryte-standalone-sdk/lib/drivers/clint.c

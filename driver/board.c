@@ -40,6 +40,8 @@ void cpu_entry(int cpuid)
 {
     extern void entry(void);
 
+    /* disable global interrupt */
+    rt_hw_interrupt_disable();
     if (cpuid == 0)
     {
         init_bss();
@@ -104,7 +106,7 @@ void rt_hw_board_init(void)
     rt_hw_interrupt_init();
     /* initialize hardware interrupt */
     rt_hw_uart_init();
-    // rt_hw_tick_init();
+    rt_hw_tick_init();
 
 #ifdef RT_USING_CONSOLE
     /* set console device */

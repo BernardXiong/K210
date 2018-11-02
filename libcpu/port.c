@@ -12,6 +12,7 @@
 #include <rtthread.h>
 #include <encoding.h>
 #include <clint.h>
+#include <sysctl.h>
 
 struct stack_frame
 {
@@ -101,20 +102,34 @@ void rt_hw_context_switch_interrupt(rt_ubase_t from, rt_ubase_t to)
     return ;
 }
 
-static int tick_isr(void *ctx)
+static volatile unsigned long tick_cycles = 0;
+int tick_isr(void)
 {
-    rt_kprintf("+");
+    uint64_t core_id = current_coreid();
+
     rt_tick_increase();
+    clint->mtimecmp[core_id] += tick_cycles;
+
     return 0;
 }
 
 /* Sets and enable the timer interrupt */
 int rt_hw_tick_init(void)
 {
-    clint_timer_init();
-    clint_timer_register(tick_isr, RT_NULL);
+    /* Read core id */
+    unsigned long core_id = current_coreid();
+    unsigned long interval = 1000/RT_TICK_PER_SECOND;
 
-    clint_timer_start(100000/RT_TICK_PER_SECOND, 0);
+    /* Clear the Machine-Timer bit in MIE */
+    clear_csr(mie, MIP_MTIP);
+
+    /* calculate */
+    tick_cycles = interval * sysctl_clock_get_freq(SYSCTL_CLOCK_CPU) / CLINT_CLOCK_DIV / 1000ULL - 1;
+    /* Set mtimecmp by core id */
+    clint->mtimecmp[core_id] = clint->mtime + tick_cycles;
+
+    /* Enable the Machine-Timer bit in MIE */
+    set_csr(mie, MIP_MTIP);
 
     return 0;
 }

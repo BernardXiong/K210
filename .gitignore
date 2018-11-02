@@ -58,3 +58,4 @@ dkms.conf
 *.map
 cconfig.h
 *.dblite
+*.old
