@@ -1,5 +1,7 @@
 # Kendryte K210板级支持包说明
 
+**注意，本git repo不再更新，k210 BSP已经转到RT-Thread upstream下，可以在[这里](https://github.com/RT-Thread/rt-thread/tree/master/bsp/k210)获得相关信息。**
+
 ## 1. 简介
 
 Kendryte K210 是集成机器视觉与机器听觉能力的系统级芯片(SoC)。使用台积电 (TSMC) 超低功耗的 28 纳米先进制程，具有双核64位处理器，拥有较好的功耗性能，稳定性与可靠性。该方案力求零门槛开发，可在最短时效部署于用户的产品中，赋予产品人工智能。
